@@ -43,5 +43,4 @@ for row in data:
 
     points += (points_scheme[choose] + points_scheme[end])
 
-
 print(points)

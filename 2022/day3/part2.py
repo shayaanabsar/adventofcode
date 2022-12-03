@@ -7,15 +7,16 @@ with open('in.txt', 'r') as file:
 alphabet = string.ascii_lowercase
 priority = 0
 
-for line in data:
-    line = line.strip('\n')
+for i in range(0, len(data), 3):
+    group = []
 
-    pack1, pack2 = line[:len(line)//2], line[len(line)//2:]
+    for j in range(i, i+3):
+        group.append(data[j].strip('\n'))
     
-    for char in pack1:
-        if char in pack2:
+    for char in group[0]:
+        if char in group[1] and char in group[2]:
             break
-
+            
     priority += alphabet.index(char.lower()) + 1
 
     if char.isupper():

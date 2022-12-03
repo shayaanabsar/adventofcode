@@ -16,7 +16,7 @@ for i in range(0, len(data), 3):
     for char in group[0]:
         if char in group[1] and char in group[2]:
             break
-            
+
     priority += alphabet.index(char.lower()) + 1
 
     if char.isupper():

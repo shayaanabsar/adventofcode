@@ -14,8 +14,6 @@ for line in data:
 		cycle_count += 2
 	else:
 		cycle_count += 1
-
-	a = 0
 	
 	if cycle_count == 20 or (cycle_count_before + 1) == 20:
 		strength += x * cycle_count

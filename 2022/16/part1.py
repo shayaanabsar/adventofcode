@@ -1,4 +1,3 @@
-import re
 from collections import deque
 from copy import deepcopy
 
@@ -50,6 +49,7 @@ for valve in deepcopy(valves):
 	if flow_rates[valve] == 0:
 		valves.remove(valve)
 
+
 highest = float('-inf')
 
 while queue:
@@ -70,4 +70,4 @@ while queue:
 			))
 
 	highest = max(highest, curr.flow)
-	print(highest)
+print(highest)

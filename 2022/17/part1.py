@@ -72,5 +72,3 @@ for i in range(2023):
 			break
 		else:
 			rock_pos = test
-		
-print(highest)

@@ -35,8 +35,9 @@ def shift_down(positions): return move(positions, -1, 0)
 
 grid = defaultdict(lambda : '.')
 highest, pattern_count = -1, 0
+increments = []
 
-for rock_count in range(2022):
+for rock_count in range(2023):
 	rock = rocks[rock_count % 5]
 	j_offset, k_offset = highest+4, 2
 	positions = []
@@ -44,16 +45,34 @@ for rock_count in range(2022):
 	for j, row in enumerate(rock):
 		for k, char in enumerate(row):
 			if char == '#': positions.append((j+j_offset, k+k_offset))
-	keep_dropping = True
+	keep_dropping=True
 	while keep_dropping:
 		direction = pattern[pattern_count%len(pattern)]
 		if direction == '>': _, positions = shift_right(positions)
 		else: _, positions = shift_left(positions)
 		keep_dropping, positions = shift_down(positions)
 		pattern_count += 1
+	old_highest = highest
 	highest = max(highest, max(positions, key=lambda x: x[0])[0])
+	increments.append(highest-old_highest)
 
 	for position in positions: grid[position] = '#'
 	rock_count += 1
-	
-print(highest+1) # add 1 because a tower only on the 0th row has height 1
+
+patterns = {}
+for i, v in enumerate(increments):
+	sub = tuple(increments[i:i+100])
+	if sub in patterns:
+		break
+	patterns[sub] = i
+
+pattern = increments[patterns[sub]:i]
+total = sum(increments[:patterns[sub]])
+
+full_patterns = (1000000000000 - patterns[sub]) // len(pattern)
+extra = (1000000000000 - patterns[sub]) % len(pattern)
+
+total += (full_patterns * sum(pattern))
+total += sum(pattern[:extra])
+
+print(total)

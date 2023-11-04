@@ -124,6 +124,6 @@ with open('in.txt') as f:
 					costs[robot_type][i] = int(sentence[sentence[2:].index(rock)+1])
 					max_number[i] = max(max_number[i], costs[robot_type][i])
 		geodes = dfs()
-		print(geodes)
+
 		total += (geodes * (bpr_num+1))
 print(total)

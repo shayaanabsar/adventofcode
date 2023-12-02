@@ -12,8 +12,7 @@ for l in data:
 	for d in digs:
 		numbers += [(i.group(), i.start()) for i in finditer(d, l.strip())]
 
-	numbers.sort(key=lambda x: x[1])
-	a, b = numbers[0][0], numbers[-1][0]
+	a, b = min(numbers, key=lambda x: x[1])[0], max(numbers, key=lambda x: x[1])[0]
 
 	if a in digs: a = digs.index(a)
 	if b in digs: b = digs.index(b)

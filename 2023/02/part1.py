@@ -3,6 +3,7 @@ from re import findall
 with open('in.txt') as f:
 	data = [line.strip() for line in f.readlines()]
 
+allowed = {'red': 12, 'green': 13, 'blue': 14}
 count = 0
 
 for i, line in enumerate(data):
@@ -16,10 +17,10 @@ for i, line in enumerate(data):
 			num, colour = inf
 			num = int(num)
 
-			if colour == 'green' and num > 13: valid = False
-			elif colour == 'blue' and num > 14 : valid = False
-			elif colour == 'red' and num > 12: valid = False
-
+			if num > allowed[colour]:
+				valid = False
+				break
+			
 		if not valid: break
 	if valid: count += i+1
 

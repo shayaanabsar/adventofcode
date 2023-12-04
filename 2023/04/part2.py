@@ -3,26 +3,16 @@ from functools import lru_cache
 
 with open('in.txt') as f: data = [line.strip() for line in f.readlines()]
 
-score, scores = 0, {}
+scores = {}
 
 for line in data:
-	numbers, sep = finditer(r'\d+', line), line.index('|')
+	numbers, sep = [(i.start(), int(i.group())) for i in finditer(r'\d+', line)], line.index('|')
+	card_number, numbers = numbers[0][1], numbers[1:]
 	
-	winning_numbers, matches, card_number  = set(), 0, None
+	winning_numbers     = {j for i, j in numbers if i < sep}
+	scratchcard_numbers = {j for i, j in numbers if i > sep}
 
-	for number in numbers:
-		index, num = number.start(), int(number.group())
-
-		if card_number is None:
-			card_number = num
-			continue
-
-		if index < sep:
-			winning_numbers.add(num)
-		elif num in winning_numbers:
-			matches += 1
-	
-	scores[card_number] = matches
+	scores[card_number] = len(winning_numbers.intersection(scratchcard_numbers))
 
 
 @lru_cache

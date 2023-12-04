@@ -6,18 +6,13 @@ score = 0
 
 for line in data:
 	line = line.split(':')[1]
-	numbers, sep = finditer(r'\d+', line), line.index('|')
+	numbers, sep = [(i.start(), int(i.group())) for i in finditer(r'\d+', line)], line.index('|')
 	
-	winning_numbers, matches  = set(), 0
+	winning_numbers     = {j for i, j in numbers if i < sep}
+	scratchcard_numbers = {j for i, j in numbers if i > sep}
 
-	for number in numbers:
-		index, num = number.start(), int(number.group())
+	matches = len(winning_numbers.intersection(scratchcard_numbers))
 
-		if index < sep:
-			winning_numbers.add(num)
-		elif num in winning_numbers:
-			matches += 1
-	
 	if matches > 0: matches = 2 ** (matches - 1)
 	score += matches
 

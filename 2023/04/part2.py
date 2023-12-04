@@ -1,24 +1,21 @@
 from re import finditer
-from collections import deque
+from functools import lru_cache
 
 with open('in.txt') as f: data = [line.strip() for line in f.readlines()]
 
-score = 0
-
-scores = {}
+score, scores = 0, {}
 
 for line in data:
 	numbers, sep = finditer(r'\d+', line), line.index('|')
 	
-	winning_numbers, matches  = set(), 0
-
-	card_number = None
+	winning_numbers, matches, card_number  = set(), 0, None
 
 	for number in numbers:
-		if card_number is None:
-			card_number = int(number.group())
-			continue
 		index, num = number.start(), int(number.group())
+
+		if card_number is None:
+			card_number = num
+			continue
 
 		if index < sep:
 			winning_numbers.add(num)
@@ -27,13 +24,13 @@ for line in data:
 	
 	scores[card_number] = matches
 
-queue = deque([i for i in range(1, len(scores) + 1)])
+
+@lru_cache
+def calc_score(card_number):
+	score = 1
+	for i in range(card_number+1, card_number+scores[card_number]+1): score += calc_score(i)
+	return score
+
 score = 0
-
-while queue:
-	curr = queue.popleft()
-	for i in range(curr+1, curr+scores[curr]+1): queue.appendleft(i)
-	score += 1
-
+for i in range(1, len(scores)+1): score += calc_score(i)
 print(score)
-

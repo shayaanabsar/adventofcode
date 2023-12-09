@@ -13,9 +13,7 @@ for line in data[2:]:
 current_node, count = 'AAA', 0
 
 while current_node != 'ZZZ':
-	if pattern[count % len(pattern)] == 'L': idx = 0
-	else: idx = 1
-
+	idx = 0 if pattern[count % len(pattern)] == 'L' else 1
 	current_node = network[current_node][idx]
 
 	count += 1

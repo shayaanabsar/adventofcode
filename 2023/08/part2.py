@@ -16,14 +16,13 @@ for line in data[2:]:
 count, mults = 0, [None for _ in current_nodes]
 
 while True:
-	if pattern[count % len(pattern)] == 'L': idx = 0
-	else: idx = 1
+	idx = 0 if pattern[count % len(pattern)] == 'L' else 1
 
 	for i, node in enumerate(current_nodes):
 		current_nodes[i] = network[node][idx]
 		if current_nodes[i][-1] == 'Z' and mults[i] == None:
 			mults[i] = count + 1
-
+			
 	if None not in mults: break
 	count += 1
 

@@ -6,7 +6,7 @@ print("""
 """)
 
 year = input("📅 Enter the year: ")
-day = input("🎁 Enter the day: ").zfill(2)
+day  = input("🎁 Enter the day: ").zfill(2)
 
 def create_file(name, year, day):
 	with open(f'{year}/{day}/{name}', 'w+'):
